@@ -33,7 +33,7 @@
 <script lang="ts">
 import ResizeObserver from 'resize-observer-polyfill'
 import { Component, Prop, Vue, Ref } from 'vue-property-decorator'
-import { Manager } from '../lib/Manager'
+import { Manager } from '@jswf/manager'
 import Title from './Title.vue'
 import { Borders, BorderType, WindowInfo, WindowState } from './Declaration'
 import Border from './Border.vue'

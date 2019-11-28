@@ -9,7 +9,7 @@
 
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Manager } from '../lib/Manager'
+import { Manager } from '@jswf/manager'
 import { WindowState, Borders, BorderType } from './Declaration'
 
 @Component({
