@@ -71,7 +71,7 @@ export default class Title extends Vue {
   }
   public update() {
     this.styleObject = {
-      height: this.size + "px",
+      height: this.size+1 + "px",
       backgroundColor: this.active
         ? "rgba(50,100,255,0.9)"
         : "rgba(100,150,255,0.9)",

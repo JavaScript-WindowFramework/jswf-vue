@@ -35,7 +35,7 @@ const config = {
       {
         test: /\.(scss|css)$/,
         use: [
-          "style-loader",
+          "vue-style-loader",
           {
             loader: "css-loader",
             options: {

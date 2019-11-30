@@ -5,7 +5,13 @@
     @mousedown="onMouseDown"
     @touchstart="onMouseDown"
   >
-    <Resize size="32" :barSize="size" :type="type" src="./images/resize.svg" />
+    <Resize v-if="activeMode===true"
+      :size="32"
+      :barSize="size"
+      :type="type"
+      :barOpen="opened"
+      @click="$emit('onOpen', true)"
+    ></Resize>
   </div>
 </template>
 
@@ -18,6 +24,9 @@ import Resize from "./Resize.vue";
   components: { Resize }
 })
 export default class Bar extends Vue {
+  $style!: { [key: string]: string };
+  @Prop({ type: Object })
+  private parentStyle!: { [key: string]: string };
   @Prop({ type: Number })
   private pos!: number;
   @Prop({ type: Number })
@@ -29,6 +38,7 @@ export default class Bar extends Vue {
   @Prop({ type: Boolean })
   private activeMode!: boolean;
 
+  private opened: boolean = false;
   private barPos!: number;
   private styleObject: Partial<CSSStyleDeclaration> = {};
   mounted() {
@@ -36,13 +46,13 @@ export default class Bar extends Vue {
     this.$el.addEventListener("move", this.onMove.bind(this));
     this.update();
   }
-  beforeDestory() {
+  beforeDestroy() {
     this.$el.removeEventListener("move", this.onMove.bind(this));
   }
   beforeUpdate() {
     this.update();
   }
-
+  @Watch("open")
   update() {
     switch (this.type) {
       case "we":
@@ -91,14 +101,19 @@ export default class Bar extends Vue {
         break;
     }
 
-    if (!this.open) {
-      const node = this.$el as HTMLElement;
-      node.style.animation = this.type + "DrawerClose 0.5s ease 0s forwards";
-      this.open = false;
-    } else if (this.open) {
-      const node = this.$el as HTMLElement;
-      node.style.animation = this.type + "DrawerShow 0.5s ease 0s normal";
-      this.open = true;
+    if (this.opened !== this.open) {
+      if (!this.open) {
+        const node = this.$el as HTMLElement;
+        node.style.animation =
+          this.parentStyle[this.type + "DrawerClose"] +
+          " 0.5s ease 0s forwards";
+        this.opened = false;
+      } else if (this.open) {
+        const node = this.$el as HTMLElement;
+        node.style.animation =
+          this.parentStyle[this.type + "DrawerShow"] + " 0.5s ease 0s normal";
+        this.opened = true;
+      }
     }
   }
   protected onMove(e: MEvent) {
@@ -135,8 +150,6 @@ export default class Bar extends Vue {
       Manager.nodeWidth = node.offsetWidth;
       Manager.nodeHeight = node.offsetHeight;
     }
-    //  this.$emit("onMove", this.barPos);
-    e.stopPropagation();
     this.$emit("onMove", this.barPos);
   }
 }

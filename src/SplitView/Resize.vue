@@ -1,27 +1,31 @@
 <template>
-  <img :class="$style.root" :style="styleObject" />
+  <img :class="$style.root" :style="styleObject" :src="image" @click="e=>$emit('click',e)"/>
 </template>
 <script lang="ts">
 import { Component, Prop, Vue, Ref, Watch } from "vue-property-decorator";
+import imageResize from "./images/resize.svg";
+
+@Component
 export default class Resize extends Vue {
   @Prop({ type: Number })
-  barSize!: number;
+  private barSize!: number;
   @Prop({ type: Number })
-  size!: number;
+  private size!: number;
   @Prop({ type: Boolean })
-  barOpen!: boolean;
+  private barOpen!: boolean;
   @Prop({ type: String })
-  type!: string;
+  private type!: string;
+  private image = imageResize;
 
   private styleObject: Partial<CSSStyleDeclaration> = {};
-  mounted() {
+  private mounted() {
     this.update();
   }
-  beforeUpdate() {
+  private beforeUpdate() {
     this.update();
   }
 
-  update() {
+  private update() {
     this.styleObject = {
       width: this.size + "px",
       height: this.size + "px",
