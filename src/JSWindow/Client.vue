@@ -37,6 +37,7 @@ export default class Client extends Vue {
 
 <style lang="scss" module>
 .client {
+  overflow: hidden;
   background: whitesmoke;
   position: absolute;
   overflow: hidden;

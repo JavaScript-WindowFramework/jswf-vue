@@ -35,7 +35,7 @@ const config = {
       {
         test: /\.(scss|css)$/,
         use: [
-          "vue-style-loader",
+          "style-loader",
           {
             loader: "css-loader",
             options: {
@@ -53,15 +53,11 @@ const config = {
   },
   resolve: {
     extensions: [".ts", ".js", ".scss", "css", ".svg", ".vue"],
-    alias: {
-      vue$: "vue/dist/vue.esm.js"
-    }
   },
   devtool: "source-map",
   plugins: [new VueLoaderPlugin()],
 
   externals: {
-    vue: "Vue",
     "vue-property-decorator": "vue-property-decorator",
     "resize-observer-polyfill": "resize-observer-polyfill",
     "css-loader":"css-loader"

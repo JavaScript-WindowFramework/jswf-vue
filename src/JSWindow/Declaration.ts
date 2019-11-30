@@ -12,6 +12,9 @@ export enum WindowStyle {
   FRAME = 16,
   RESIZE = 32
 }
+export interface JSWFEvent extends Event {
+  params?: unknown;
+}
 export interface WindowProps {
   x: number | null
   y: number | null

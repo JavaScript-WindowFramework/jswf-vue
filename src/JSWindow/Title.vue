@@ -28,87 +28,88 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { Manager } from '@jswf/manager'
-import { WindowState } from './Declaration'
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { Manager } from "@jswf/manager";
+import { WindowState } from "./Declaration";
 
 @Component({
   components: {}
 })
 export default class Title extends Vue {
   @Prop({ type: Number, default: 32 })
-  private size!: number
+  private size!: number;
   @Prop({ type: Number, default: WindowState.NORMAL })
-  private windowState!: WindowState
+  private windowState!: WindowState;
   @Prop({ type: Boolean, default: false })
-  private active!: boolean
+  private active!: boolean;
+  $style!: { [key: string]: string };
   private styleIcons: Partial<CSSStyleDeclaration> = {
-    width: this.size - 2 + 'px',
-    height: this.size - 2 + 'px'
-  }
+    width: this.size - 2 + "px",
+    height: this.size - 2 + "px"
+  };
   private styleObject: Partial<CSSStyleDeclaration> = {
-    height: this.size + 'px',
+    height: this.size + "px",
     backgroundColor: this.active
-      ? 'rgba(50,100,255,0.9)'
-      : 'rgba(100,150,255,0.9)',
-    color: this.active ? 'white' : '#eeeeee'
-  }
+      ? "rgba(50,100,255,0.9)"
+      : "rgba(100,150,255,0.9)",
+    color: this.active ? "white" : "#eeeeee"
+  };
 
-  private width: number = 640
-  private height: number = 480
+  private width: number = 640;
+  private height: number = 480;
   public setActive(flag: boolean) {
     this.styleObject.backgroundColor = flag
-      ? 'rgba(50,100,255,0.9)'
-      : 'rgba(100,150,255,0.9)'
-    this.styleObject.color = flag ? 'white' : '#eeeeee'
+      ? "rgba(50,100,255,0.9)"
+      : "rgba(100,150,255,0.9)";
+    this.styleObject.color = flag ? "white" : "#eeeeee";
   }
   public mounted() {
-    this.update()
+    this.update();
   }
   public beforeUpdate() {
-    this.update()
+    this.update();
   }
   public update() {
     this.styleObject = {
-      height: this.size + 'px',
+      height: this.size + "px",
       backgroundColor: this.active
-        ? 'rgba(50,100,255,0.9)'
-        : 'rgba(100,150,255,0.9)',
-      color: this.active ? 'white' : '#eeeeee'
-    }
+        ? "rgba(50,100,255,0.9)"
+        : "rgba(100,150,255,0.9)",
+      color: this.active ? "white" : "#eeeeee"
+    };
     this.styleIcons = {
-      width: this.size - 2 + 'px',
-      height: this.size - 2 + 'px'
-    }
+      width: this.size - 2 + "px",
+      height: this.size - 2 + "px"
+    };
   }
   private onFrame(e: MouseEvent | TouchEvent) {
     if (Manager.frame == null) {
-      Manager.frame = 'TITLE'
+      Manager.frame = "TITLE";
     }
   }
   private onIconClick(e: MouseEvent) {
-    const node = e.target
+    const node = e.target;
     if (node instanceof HTMLDivElement) {
-      let state: WindowState | undefined
+      let state: WindowState | undefined;
       switch (node.id) {
-        case 'min':
+        case this.$style.min:
           state =
             this.windowState === WindowState.MIN
               ? WindowState.NORMAL
-              : WindowState.MIN
-          break
-        case 'max':
-          state = WindowState.MAX
-          break
-        case 'normal':
-          state = WindowState.NORMAL
-          break
-        case 'close':
-          state = WindowState.HIDE
-          break
+              : WindowState.MIN;
+          break;
+        case this.$style.max:
+          state = WindowState.MAX;
+          break;
+        case this.$style.normal:
+          state = WindowState.NORMAL;
+          break;
+        case this.$style.close:
+          state = WindowState.HIDE;
+          break;
       }
       if (state) {
-        this.$emit('set-state', state)
+        this.$emit("set-state", state);
       }
     }
   }
@@ -135,8 +136,8 @@ export default class Title extends Vue {
   > #text {
     flex: 1;
     overflow: hidden;
-    font-family: 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande',
-      'Lucida Sans', Arial, sans-serif;
+    font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+      "Lucida Sans", Arial, sans-serif;
     font-size: 24px;
     padding: 0px 0.5em;
     align-items: center;

@@ -113,7 +113,7 @@ export default class Border extends Vue {
 
 <style lang="scss" module>
 .border {
-  background-color: rgba(0, 0, 0, 0.05);
+  /* background-color: rgba(0, 0, 0, 0.05); */
   position: absolute;
   user-select: none;
   &:active {

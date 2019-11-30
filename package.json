@@ -5,7 +5,8 @@
   "license": "MIT",
   "scripts": {
     "watch": "webpack --config src/webpack.config.js -w --mode development",
-    "build": "webpack --config src/webpack.config.js"
+    "build": "webpack --config src/webpack.config.js",
+    "test":"jest"
   },
   "dependencies": {
     "resize-observer-polyfill": "^1.5.1",
@@ -14,12 +15,15 @@
   "devDependencies": {
     "@babel/core": "^7.7.4",
     "@jswf/manager": "^1.0.1",
+    "@types/jest": "^24.0.23",
     "@types/webpack": "^4.41.0",
-    "@vue/test-utils": "^1.0.0-beta.27",
+    "@vue/test-utils": "^1.0.0-beta.30",
+    "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
-    "babel-preset-vca-jsx": "^0.3.2",
+    "babel-preset-env": "^1.7.0",
     "css-loader": "^3.2.0",
     "csstype": "^2.6.7",
+    "jest": "^24.9.0",
     "node-sass": "^4.13.0",
     "sass-loader": "^8.0.0",
     "source-map-loader": "^0.2.4",
@@ -28,10 +32,28 @@
     "typescript": "^3.7.2",
     "url-loader": "^3.0.0",
     "vue": "^2.6.10",
+    "vue-jest": "^3.0.5",
     "vue-loader": "^15.7.2",
     "vue-style-loader": "^4.1.2",
     "vue-template-compiler": "^2.6.10",
     "webpack": "^4.41.2",
     "webpack-cli": "^3.3.10"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "js",
+      "json",
+      "vue"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/(?!vue-awesome|vuex-i18n)"
+    ],
+    "transform": {
+      ".*\\.(vue)$": "<rootDir>/node_modules/vue-jest",
+      "^.+\\.js$": "<rootDir>/node_modules/babel-jest"
+    },
+    "moduleNameMapper": {
+      "^@/(.*)$": "<rootDir>/src/$1"
+    }
   }
 }
