@@ -307,6 +307,9 @@ export default class JSWindow extends Vue {
           } else {
             y = this.py;
           }
+
+          this.px = x;
+          this.py = y;
           clientWidth = width;
           clientHeight = height - this.titleSize;
 
