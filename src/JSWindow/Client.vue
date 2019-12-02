@@ -5,32 +5,35 @@
 </template>
 
 <script lang="ts">
-import { Component, Prop, Vue } from 'vue-property-decorator'
-import { WindowState, Borders, BorderType } from './Declaration'
+import { Component, Prop, Vue } from "vue-property-decorator";
+import { WindowState, Borders, BorderType } from "./Declaration";
 
 @Component({
   components: {}
 })
 export default class Client extends Vue {
-  private styleObject: Partial<CSSStyleDeclaration> = {}
+  private styleObject: Partial<CSSStyleDeclaration> = {};
   @Prop({ type: Number })
-  private titleSize!: number
+  private titleSize!: number;
   @Prop({ type: Number })
-  private width!: number
+  private width!: number;
   @Prop({ type: Number })
-  private height!: number
+  private height!: number;
+  @Prop({ type: Object })
+  private clientStyle!: Partial<CSSStyleDeclaration>;
   beforeUpdate() {
-    this.update()
+    this.update();
   }
   mounted() {
-    this.update()
+    this.update();
   }
   update() {
     this.styleObject = {
-      top: this.titleSize + 'px',
-      width: this.width + 'px',
-      height: this.height + 'px'
-    }
+      ...this.clientStyle,
+      top: this.titleSize + "px",
+      width: this.width + "px",
+      height: this.height + "px"
+    };
   }
 }
 </script>

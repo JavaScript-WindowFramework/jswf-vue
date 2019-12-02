@@ -9,20 +9,20 @@
       <slot />
     </div>
     <div :id="$style.icons">
-      <div :id="$style.min" :style="styleIcons" @click="onIconClick" />
+      <div v-if="windowStyle&4" :id="$style.min" :style="styleIcons" @click="onIconClick" />
       <div
-        v-if="windowState !== 2"
+        v-if="windowState !== 2 && windowStyle&2"
         :id="$style.max"
         :style="styleIcons"
         @click="onIconClick"
       />
       <div
-        v-if="windowState === 2"
+        v-if="windowState === 2 && windowStyle&2"
         :id="$style.normal"
         :style="styleIcons"
         @click="onIconClick"
       />
-      <div :id="$style.close" :style="styleIcons" @click="onIconClick" />
+      <div v-if="windowStyle&8" :id="$style.close" :style="styleIcons" @click="onIconClick" />
     </div>
   </div>
 </template>
@@ -38,6 +38,8 @@ import { WindowState } from "./Declaration";
 export default class Title extends Vue {
   @Prop({ type: Number, default: 32 })
   private size!: number;
+  @Prop({ type: Number })
+  private windowStyle!: number;
   @Prop({ type: Number, default: WindowState.NORMAL })
   private windowState!: WindowState;
   @Prop({ type: Boolean, default: false })
@@ -47,13 +49,7 @@ export default class Title extends Vue {
     width: this.size - 2 + "px",
     height: this.size - 2 + "px"
   };
-  private styleObject: Partial<CSSStyleDeclaration> = {
-    height: this.size + "px",
-    backgroundColor: this.active
-      ? "rgba(50,100,255,0.9)"
-      : "rgba(100,150,255,0.9)",
-    color: this.active ? "white" : "#eeeeee"
-  };
+  private styleObject: Partial<CSSStyleDeclaration> = {};
 
   private width: number = 640;
   private height: number = 480;
@@ -71,7 +67,7 @@ export default class Title extends Vue {
   }
   public update() {
     this.styleObject = {
-      height: this.size+1 + "px",
+      height: this.size + 1 + "px",
       backgroundColor: this.active
         ? "rgba(50,100,255,0.9)"
         : "rgba(100,150,255,0.9)",

@@ -1,5 +1,6 @@
-# @jswf/react
+# @jswf/vue
 
+[![npm version](https://badge.fury.io/js/%40jswf%2Fvue.svg)](https://badge.fury.io/js/%40jswf%2Fvue)
 Virtual window component for Vue.js
 
 ## １．Contents

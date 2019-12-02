@@ -5,15 +5,18 @@
     @mousedown="onMouseDown"
     @touchstart="onMouseDown"
   >
-    <Border
-      v-for="item in borders"
-      :key="item"
-      :size="borderSize"
-      :border-type="item"
-    />
+    <template v-if="windowStyle & 32">
+      <Border
+        v-for="item in borders"
+        :key="item"
+        :size="borderSize"
+        :border-type="item"
+      />
+    </template>
     <Title
       :active="active"
       :size="titleSize"
+      :window-style="windowStyle"
       :window-state="nowWindowState"
       @set-state="onTitleState"
     >
@@ -24,6 +27,7 @@
       :titleSize="titleSize"
       :width="windowInfo.clientWidth"
       :height="windowInfo.clientHeight"
+      :clientStyle="clientStyle"
     >
       <slot />
     </Client>
@@ -44,6 +48,7 @@ import {
 } from "./Declaration";
 import Border from "./Border.vue";
 import Client from "./Client.vue";
+import { WindowStyle } from "../../dist";
 
 interface MoveParams {
   px: number;
@@ -63,6 +68,9 @@ export default class JSWindow extends Vue {
   @Prop({ type: Number, default: null })
   private y!: number | null;
 
+  @Prop({ type: Object, default: () => ({}) })
+  private clientStyle!: Partial<CSSStyleDeclaration>;
+
   @Prop({ type: Number, default: 640 })
   private width!: number;
   @Prop({ type: Number, default: 480 })
@@ -70,6 +78,9 @@ export default class JSWindow extends Vue {
 
   @Prop({ type: Number, default: 32 })
   titleSize!: number;
+
+  @Prop({ type: Number, default: 0xff })
+  windowStyle!: number;
 
   @Prop({ type: Boolean, default: true })
   overlapped!: boolean;
@@ -337,6 +348,7 @@ export default class JSWindow extends Vue {
       height: height,
       clientWidth,
       clientHeight,
+      clientStyle: this.clientStyle,
       windowState: this.changeWindowState
     };
 
@@ -347,6 +359,9 @@ export default class JSWindow extends Vue {
       top: y + "px",
       minHeight: this.titleSize + "px"
     };
+    if (!(this.windowStyle && WindowStyle.FRAME)) {
+      this.styleObject.border = "none";
+    }
     this.onUpdate();
   }
 
