@@ -20,7 +20,7 @@ const config = {
         loader: "vue-loader"
       },
       {
-        test: /\.ts|\.tsx$/,
+        test: /\.(js|ts|tsx)$/,
         exclude: /node_modules/,
         loader: "ts-loader",
         options: {
@@ -28,14 +28,9 @@ const config = {
         }
       },
       {
-        test: /\.js$/,
-        use: ["babel-loader", "source-map-loader"],
-        enforce: "pre"
-      },
-      {
         test: /\.(scss|css)$/,
         use: [
-          "vue-style-loader",
+          "style-loader",
           {
             loader: "css-loader",
             options: {
@@ -53,14 +48,16 @@ const config = {
   },
   resolve: {
     extensions: [".ts", ".js", ".scss", "css", ".svg", ".vue"],
+    alias: {
+      vue: 'vue/dist/vue.esm.js',
+    }
   },
   devtool: "source-map",
   plugins: [new VueLoaderPlugin()],
 
   externals: {
     "vue-property-decorator": "vue-property-decorator",
-    "resize-observer-polyfill": "resize-observer-polyfill",
-    "css-loader":"css-loader"
+    "resize-observer-polyfill": "resize-observer-polyfill"
   }
 };
 if (config.mode === "development") {

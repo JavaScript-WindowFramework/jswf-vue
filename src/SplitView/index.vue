@@ -38,13 +38,13 @@ export default class SplitView extends Vue {
   $style!: { [key: string]: string };
   @Prop({ type: String, default: "ew" })
   private type!: string;
-  @Prop({ type: Number, default: 16 })
+  @Prop({ type: Number, default: 10 })
   private bold!: number;
   @Prop({ type: Number, default: 200 })
   private pos!: number;
   @Prop({ type: Number, default: 3000 })
   private activeWait!: number;
-  @Prop({ type: Number, default: 300 })
+  @Prop({ type: Number, default: -1 })
   private activeSize!: number;
   @Ref()
   private child0!: HTMLDivElement;

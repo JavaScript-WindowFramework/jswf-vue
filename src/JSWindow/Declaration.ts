@@ -32,11 +32,6 @@ export interface WindowProps {
   clientStyle: Partial<CSSStyleDeclaration>
 }
 export interface WindowInfo extends NonNullable<WindowProps> {
-  realX: number
-  realY: number
-  realWidth: number
-  realHeight: number
-  realWindowState: WindowState
   clientWidth: number
   clientHeight: number
 }

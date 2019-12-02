@@ -15,7 +15,7 @@
       :active="active"
       :size="titleSize"
       :window-state="nowWindowState"
-      @set-state="onWindowState"
+      @set-state="onTitleState"
     >
       {{ title }}
     </Title>
@@ -94,6 +94,11 @@ export default class JSWindow extends Vue {
   oldWindowState: number = WindowState.HIDE;
   changeWindowState: number = WindowState.HIDE;
 
+  @Watch("windowState")
+  private onWindowState(state: WindowState) {
+    // this.setWindowState(state);
+  }
+
   @Ref()
   private clientRef!: Vue;
   private windowInfo: WindowInfo = {
@@ -107,15 +112,10 @@ export default class JSWindow extends Vue {
     title: this.title,
     active: this.active,
     overlapped: this.overlapped,
-    realX: this.x || 0,
-    realY: this.y || 0,
-    realWidth: this.width,
-    realHeight: this.height,
     clientWidth: 0,
     clientHeight: 0,
-    windowState: this.windowState,
+    windowState: WindowState.HIDE,
     windowStyle: 0,
-    realWindowState: this.changeWindowState,
     onUpdate: null,
     clientStyle: {}
   };
@@ -138,10 +138,10 @@ export default class JSWindow extends Vue {
         const p = Manager.getPos((e as unknown) as MouseEvent | TouchEvent);
         Manager.baseX = p.x;
         Manager.baseY = p.y;
-        Manager.nodeX = this.windowInfo.realX;
-        Manager.nodeY = this.windowInfo.realY;
-        Manager.nodeWidth = this.windowInfo.realWidth;
-        Manager.nodeHeight = this.windowInfo.realHeight;
+        Manager.nodeX = this.px || 0;
+        Manager.nodeY = this.py || 0;
+        Manager.nodeWidth = this.pwidth;
+        Manager.nodeHeight = this.pheight;
       }
     }
     e.stopPropagation();
@@ -328,14 +328,10 @@ export default class JSWindow extends Vue {
 
     this.windowInfo = {
       ...this.windowInfo,
-      x: this.px,
-      y: this.py,
-      width: this.pwidth,
-      height: this.pheight,
-      realX: x,
-      realY: y,
-      realWidth: width,
-      realHeight: height,
+      x: x,
+      y: y,
+      width: width,
+      height: height,
       clientWidth,
       clientHeight,
       windowState: this.changeWindowState
@@ -350,6 +346,7 @@ export default class JSWindow extends Vue {
     };
     this.onUpdate();
   }
+
   onUpdate() {
     let flag = false;
     if (this.windowInfoKeep)
@@ -367,7 +364,7 @@ export default class JSWindow extends Vue {
       this.windowInfoKeep = {
         ...this.windowInfo
       };
-      this.$emit("onUpdate", this, {
+      this.$emit("onUpdate", {
         ...this.windowInfo
       });
     }
@@ -463,7 +460,7 @@ export default class JSWindow extends Vue {
       node.style.animation = "";
       setTimeout(() => {
         this.changeWindowState = WindowState.NORMAL;
-        //this.$forceUpdate();
+        this.$forceUpdate();
         node.style.animation = `${this.$style.Restore} 0.5s ease 0s forwards`;
       }, 1);
     }
@@ -510,9 +507,8 @@ export default class JSWindow extends Vue {
       }
     }
   }
-  private onWindowState(windowState: WindowState) {
-    this.nowWindowState = windowState;
-    this.changeState();
+  private onTitleState(windowState: WindowState) {
+    this.setWindowState(windowState);
   }
   private onMove(e: JSWFEvent): void {
     // if (WindowManager.frame == null) return;
@@ -520,8 +516,8 @@ export default class JSWindow extends Vue {
       return;
     }
     let [px, py, pwidth, pheight] = [
-      this.px === null ? this.windowInfo.realX : this.px,
-      this.py === null ? this.windowInfo.realY : this.py,
+      this.px === null ? 0 : this.px,
+      this.py === null ? 0 : this.py,
       this.pwidth,
       this.pheight
     ];
