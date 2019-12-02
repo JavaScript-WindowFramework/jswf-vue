@@ -27,6 +27,12 @@ Just enclose with JSWindow and it will become a virtual window
 - Source code
 [https://github.com/JavaScript-WindowFramework/vue](https://github.com/JavaScript-WindowFramework/vue)
 
+- Sample Source
+[https://github.com/JavaScript-WindowFramework/jswf-vue-sample](https://github.com/JavaScript-WindowFramework/jswf-vue-sample)
+
+- Sample Page
+[https://javascript-windowframework.github.io/jswf-vue-sample/][https://javascript-windowframework.github.io/jswf-vue-sample/]
+
 ## ４．Sample source
 
 ```tsx:index.tsx
@@ -67,7 +73,7 @@ export default {
 
 ## ５．Component list
 
-JSWindow
+[JSWindow](https://ttis.croud.jp/?uuid=d1808593-1825-4de5-bf53-b9d2109f3604)
 SplitView
 
 ## ６．license

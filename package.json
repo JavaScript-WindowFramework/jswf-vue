@@ -1,6 +1,6 @@
 {
   "name": "@jswf/vue",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "main": "dist/index.js",
   "license": "MIT",
   "scripts": {
@@ -42,5 +42,19 @@
     "transform": {
       "^.+\\.ts$": "ts-jest"
     }
-  }
+  },
+  "description": "Virtual window component for Vue.js",
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavaScript-WindowFramework/jswf-vue.git"
+  },
+  "keywords": ["vue","virtualwindow","splitter"],
+  "author": "SoraKumo",
+  "bugs": {
+    "url": "https://github.com/JavaScript-WindowFramework/jswf-vue/issues"
+  },
+  "homepage": "https://github.com/JavaScript-WindowFramework/jswf-vue#readme"
 }
