@@ -44,11 +44,11 @@ import {
   BorderType,
   WindowInfo,
   WindowState,
-  JSWFEvent
+  JSWFEvent,
+  WindowStyle
 } from "./Declaration";
 import Border from "./Border.vue";
 import Client from "./Client.vue";
-import { WindowStyle } from "../../dist";
 
 interface MoveParams {
   px: number;
