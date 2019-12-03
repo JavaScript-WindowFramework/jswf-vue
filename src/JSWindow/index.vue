@@ -334,8 +334,11 @@ export default class JSWindow extends Vue {
       clientWidth = width;
       clientHeight = height - this.titleSize;
     }
-    clientWidth -= 2;
-    clientHeight -= 2;
+    if (this.windowStyle & WindowStyle.FRAME) {
+      clientWidth -= 2;
+      clientHeight -= 2;
+    }
+
     if (clientWidth < 0) clientWidth = 0;
     if (clientHeight < 0) clientHeight = 0;
     this.changeState();
@@ -357,7 +360,8 @@ export default class JSWindow extends Vue {
       height: height + "px",
       left: x + "px",
       top: y + "px",
-      minHeight: this.titleSize + "px"
+      minHeight: this.titleSize + "px",
+      position: this.overlapped ? "fixed" : "absolute"
     };
     if (!(this.windowStyle && WindowStyle.FRAME)) {
       this.styleObject.border = "none";
@@ -636,6 +640,7 @@ $titleSize: 32px;
   border: solid 1px rgba(0, 0, 0, 0.4);
   box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.4);
   border-radius: 1em 1em 0 0;
+  box-sizing: border-box;
 
   min-height: $titleSize;
 }
